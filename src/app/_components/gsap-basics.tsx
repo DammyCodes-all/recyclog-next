@@ -4,7 +4,6 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useRef, useState } from "react";
-import { text } from "stream/consumers";
 gsap.registerPlugin(ScrollTrigger);
 export const GsapTo = () => {
   useGSAP(() => {
@@ -142,12 +141,12 @@ export const GsapStagger = () => {
       },
       {
         scaleY: 1,
-        repeat: -1,
         duration: 1.3,
-        yoyo: true,
         ease: "power1.inOut",
         stagger: {
           amount: 1,
+          repeat: -1,
+          yoyo: true,
           from: "start",
         },
       }
@@ -162,6 +161,9 @@ export const GsapStagger = () => {
       <span className="h-10 w-[2px] rounded stagger-box bg-purple-400"></span>
       <span className="h-10 w-[2px] rounded stagger-box bg-purple-600"></span>
       <span className="h-10 w-[2px] rounded stagger-box bg-purple-700"></span>
+      <span className="h-10 w-[2px] rounded stagger-box bg-purple-100"></span>
+      <span className="h-10 w-[2px] rounded stagger-box bg-purple-200"></span>
+      <span className="h-10 w-[2px] rounded stagger-box bg-purple-300"></span>
     </div>
   );
 };
@@ -218,10 +220,63 @@ export const Gsaptext = () => {
           x: 0,
           opacity: 1,
           duration: 2,
+          scrollTrigger: {
+            trigger: textRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            scrub: true,
+          },
           ease: "power1.inOut",
         }
       );
     }
   }, []);
   return <div ref={textRef}>Hello world!!</div>;
+};
+
+export const HoverButton = () => {
+  const buttonRef = useRef<HTMLSpanElement | null>(null);
+  const hoverTweenRef = useRef<gsap.core.Tween | null>(null);
+  useGSAP(() => {
+    if (!buttonRef.current) return;
+    gsap.set(buttonRef.current, {
+      x: "100%",
+      y: 0,
+    });
+    hoverTweenRef.current = gsap.to(buttonRef.current, {
+      x: "-100%",
+      paused: true,
+      duration: 1,
+      ease: "sine.inOut",
+    });
+  }, []);
+  const handleHover = (reverse: boolean = false) => {
+    if (hoverTweenRef.current) {
+      const tl = hoverTweenRef.current;
+      if (!reverse) {
+        tl.play();
+      } else {
+        tl.timeScale(2).reverse();
+      }
+    }
+  };
+  return (
+    <button
+      onMouseEnter={(e) => {
+        e.preventDefault();
+        handleHover();
+      }}
+      onMouseLeave={(e) => {
+        e.preventDefault();
+        handleHover(true);
+      }}
+      className="bg-white text-black px-4 py-2 overflow-hidden relative hover:text-white w-fit rounded [&>span]:bg-black cursor-pointer duration-1000 transition-colors"
+    >
+      <span
+        className="w-full inset-y-0 inset-x-1/1  h-full absolute -z-0"
+        ref={buttonRef}
+      ></span>
+      <p className="relative">Hover Me</p>
+    </button>
+  );
 };

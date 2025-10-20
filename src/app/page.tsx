@@ -5,6 +5,7 @@ import {
   Gsaptext,
   GsapTimeline,
   GsapTo,
+  HoverButton,
   Scrolltrigger,
 } from "./_components/gsap-basics";
 
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <main className="flex p-20 flex-col gap-2 relative">
       <div>Gsap animations will be performed here.....</div>
+      <HoverButton />
       <div className="flex flex-col gap-5 w-full h-full items-center justify-center">
         <div>
           <p>The Gsap `to` basic method</p>
