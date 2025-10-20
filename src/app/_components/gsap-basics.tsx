@@ -226,7 +226,7 @@ export const Gsaptext = () => {
             end: "bottom 20%",
             scrub: true,
           },
-          ease: "power1.inOut",
+          ease: "elastic.inOut",
         }
       );
     }
@@ -239,13 +239,11 @@ export const HoverButton = () => {
   const hoverTweenRef = useRef<gsap.core.Tween | null>(null);
   useGSAP(() => {
     if (!buttonRef.current) return;
-    gsap.set(buttonRef.current, {
-      x: "100%",
-      y: 0,
-    });
+
     hoverTweenRef.current = gsap.to(buttonRef.current, {
       x: "-100%",
       paused: true,
+      scale: 1.01,
       duration: 1,
       ease: "sine.inOut",
     });
@@ -270,10 +268,10 @@ export const HoverButton = () => {
         e.preventDefault();
         handleHover(true);
       }}
-      className="bg-white text-black px-4 py-2 overflow-hidden relative hover:text-white w-fit rounded [&>span]:bg-black cursor-pointer duration-1000 transition-colors"
+      className="bg-white font-bold text-lg overflow-hidden hover:overflow-none text-black px-4 py-2  relative hover:text-white w-fit rounded [&>span]:bg-black cursor-pointer duration-1000 transition-colors"
     >
       <span
-        className="w-full inset-y-0 inset-x-1/1  h-full absolute -z-0"
+        className="w-full inset-y-0 inset-x-[100%]  h-full absolute -z-0"
         ref={buttonRef}
       ></span>
       <p className="relative">Hover Me</p>
