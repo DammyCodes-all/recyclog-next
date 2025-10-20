@@ -1,15 +1,18 @@
 import {
   GsapFrom,
   GsapFromTo,
+  GsapStagger,
+  Gsaptext,
   GsapTimeline,
   GsapTo,
+  Scrolltrigger,
 } from "./_components/gsap-basics";
 
 export default function Home() {
   return (
-    <main className="w-full h-full flex items-center justify-center p-20 flex-col gap-2">
+    <main className="flex p-20 flex-col gap-2 relative">
       <div>Gsap animations will be performed here.....</div>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 w-full h-full items-center justify-center">
         <div>
           <p>The Gsap `to` basic method</p>
           <GsapTo />
@@ -26,7 +29,15 @@ export default function Home() {
           <p>The Gsap `timeline` intermediate method</p>
           <GsapTimeline />
         </div>
+        <div>
+          <p>The Gsap `Stagger` intermediate method</p>
+          <GsapStagger />
+        </div>
       </div>
+      <div className="">
+        <Scrolltrigger />
+      </div>
+      <Gsaptext />
     </main>
   );
 }
